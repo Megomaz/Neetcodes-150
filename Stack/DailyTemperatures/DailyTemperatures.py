@@ -1,23 +1,13 @@
-class Solution {
-    public int[] dailyTemperatures(int[] temperatures) {
-        int[] result = new int[temperatures.length];
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        result = [0] * len(temperatures)
+        stack = []
 
-        for (int i = 0; i < temperatures.length; i++) {
-            int j = i + 1;
-            int count = 1;
-            while (j < temperatures.length && temperatures[j] <= temperatures[i]) {
-                count++;
-                j++;
-            }
+        for i,temp in enumerate(temperatures):
+            while stack and stack[-1][1] < temp:
+                result[stack[-1][0]] = i - stack[-1][0] 
+                stack.pop()
+            else:
+                stack.append((i,temp))
 
-            if (j < temperatures.length) {
-                result[i] = count;
-            } else {
-                result[i] = 0;
-            }
-        }
-
-        return result;
-    }
-}    
-
+        return result
